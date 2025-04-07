@@ -1,24 +1,24 @@
 <?php session_start(); ?>
 <!DOCTYPE html>
-<html>
-<head><title>Registro</title></head>
-<body>
-    <h2>Registro</h2>
-    <form action="../controllers/AuthController.php?action=register" method="POST">
-        <label>Usuario:</label>
-        <input type="text" name="nombre" required>
-        <br>
-        <label>Email:</label>
-        <input type="text" name="email" required>
-        <br>
-        <label>Contraseña:</label>
-        <input type="password" name="password" required>
-        <br>
-        <button type="submit">Entrar</button>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex justify-center items-center min-h-screen">
+    <form action="../controllers/AuthController.php?action=register" method="POST" class="bg-white p-8 rounded-xl shadow-md w-full max-w-md space-y-4">
+        <h1 class="text-2xl font-bold text-center">Registro</h1>
+
+        <?php if (isset($_GET['error'])): ?>
+            <p class="text-red-500 text-center">Credenciales incorrectas</p>
+        <?php endif; ?>
+
+        <input type="text" name="nombre" placeholder="Nombre" required class="w-full border p-2 rounded" />
+        <input type="email" name="email" placeholder="Correo" required class="w-full border p-2 rounded" />
+        <input type="password" name="password" placeholder="Contraseña" required class="w-full border p-2 rounded" />
+        <button type="submit" class="bg-blue-500 text-white p-2 rounded w-full hover:bg-blue-600">Registrarse</button>
+        <p class="text-center text-sm">¿Ya tienes cuenta? <a href="login.php" class="text-blue-600 underline">Inicia sesión</a></p>
     </form>
-    <a href="login.php">Ir al Login</a>
-    <?php if (isset($_GET['error'])): ?>
-        <p style="color:red;">Credenciales incorrectas</p>
-    <?php endif; ?>
 </body>
 </html>

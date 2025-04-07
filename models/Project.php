@@ -33,7 +33,23 @@ class Project {
     }
 
     public function delete($id) {
-        $stmt = $this->conn->prepare("DELETE FROM projects WHERE id = ?");
-        return $stmt->execute([$id]);
+        $statement = $this->conn->prepare("SELECT COUNT(*) FROM files WHERE id_project = ?");
+        $statement->execute([$id]);
+        $count = $statement->fetchColumn();
+
+        if ($count > 0) {
+            // Mostrar error o redirigir con un mensaje
+            $statement = $this->conn->prepare("DELETE FROM files WHERE id_project = ?");
+            $statement->execute([$id]);
+
+            // Luego sí eliminas el proyecto
+            $statement = $this->conn->prepare("DELETE FROM projects WHERE id = ?");
+            $statement->execute([$id]);
+        } else {
+            // Eliminar proyecto
+            $stmt = $this->conn->prepare("DELETE FROM projects WHERE id = ?");
+            return $stmt->execute([$id]);
+        }
+
     }
 }
